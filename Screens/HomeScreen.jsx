@@ -4,13 +4,17 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Bars3CenterLeftIcon, MagnifyingGlassIcon } from "react-native-heroicons/outline";
 import { styles } from '../theme'
 import TrendingMovies from "../components/TrendingMovies";
+import MovieList from "../components/MovieList";
 const ios = Platform.OS == "ios";
 
 const HomeScreen = () => {
 
   const [trending, setTrending] = useState([1, 2, 3])
+  const [upcoming, setUpcoming] = useState([1, 2, 3])
+  const [topRated, setTopRated] = useState([1, 2, 3])
 
   return (
+
     <View className="flex-1 bg-neutral-800">
 
       {/* SEARCH BAR AND LOGO */}
@@ -32,8 +36,14 @@ const HomeScreen = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 10 }}
       >
+
+
         {/* TRENDING MOVIES SLIDER */}
         <TrendingMovies data={trending} />
+
+        {/* UPCOMING MOVIES ROW */}
+        <MovieList title={'Uncoming'} data={upcoming} />
+
       </ScrollView>
 
     </View>
