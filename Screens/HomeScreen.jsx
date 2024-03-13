@@ -42,7 +42,11 @@ const HomeScreen = () => {
         <TrendingMovies data={trending} />
 
         {/* UPCOMING MOVIES ROW */}
-        <MovieList title={'Uncoming'} data={upcoming} />
+        <MovieList title='Uncoming' data={upcoming} />
+
+
+        {/* TopRated MOVIES ROW */}
+        <MovieList title='Top Rated' data={topRated} />
 
       </ScrollView>
 
