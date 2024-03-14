@@ -7,6 +7,7 @@ import { HeartIcon } from 'react-native-heroicons/solid'
 import { styles, theme } from '../theme'
 import { LinearGradient } from 'expo-linear-gradient'
 import Cast from '../components/Cast'
+import MovieLoist from '../components/MovieList'
 
 
 var { width, height } = Dimensions.get('window')
@@ -19,6 +20,7 @@ const MovieScreen = () => {
     const [isFavourite, setIsFavourite] = useState(false)
     const navigation = useNavigation()
     const [cast, setCast] = useState([1, 2, 3, 4, 5])
+    const [similarMovies, setsimilarMovies] = useState([1, 2, 3, 4, 5])
     let movieName = 'Spider Man no way home!'
 
 
@@ -96,7 +98,10 @@ const MovieScreen = () => {
             </View>
 
             {/* Cast */}
-            <Cast cast={cast} />
+            <Cast cast={cast} navigation={navigation} />
+
+            {/* Similar Movies  */}
+            <MovieLoist title="Similar Movies" hideSeeAll={true} data={similarMovies} />
         </ScrollView>
     )
 

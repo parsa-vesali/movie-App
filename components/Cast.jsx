@@ -1,7 +1,7 @@
 import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
 
-const Cast = ({ cast }) => {
+const Cast = ({ cast, navigation }) => {
     const personName = 'Tom Hardy'
     const characterName = 'jhon'
     return (
@@ -15,7 +15,7 @@ const Cast = ({ cast }) => {
                 {
                     cast && cast.map((person, index) => {
                         return (
-                            <TouchableOpacity key={index} className="mr-4 items-center">
+                            <TouchableOpacity key={index} className="mr-4 items-center" onPress={() => navigation.navigate('Person', person)}>
                                 <View className="rounded-full overflow-hidden h-20 w-20 items-center border border-neutral-500">
                                     <Image
                                         source={require('../assets/slider/cast.webp')}
