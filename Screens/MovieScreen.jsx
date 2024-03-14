@@ -8,6 +8,7 @@ import { styles, theme } from '../theme'
 import { LinearGradient } from 'expo-linear-gradient'
 import Cast from '../components/Cast'
 import MovieLoist from '../components/MovieList'
+import Loading from "../components/Loading";
 
 
 var { width, height } = Dimensions.get('window')
@@ -21,6 +22,7 @@ const MovieScreen = () => {
     const navigation = useNavigation()
     const [cast, setCast] = useState([1, 2, 3, 4, 5])
     const [similarMovies, setsimilarMovies] = useState([1, 2, 3, 4, 5])
+    const [loading, setLoading] = useState(false)
     let movieName = 'Spider Man no way home!'
 
 
@@ -46,22 +48,30 @@ const MovieScreen = () => {
                         <HeartIcon size='35' color={isFavourite ? 'crimson' : 'white'} />
                     </TouchableOpacity>
                 </SafeAreaView>
-                <View>
-                    <Image
-                        source={require('../assets/slider/slider-2.webp')}
-                        style={{
-                            width,
-                            height: height * 0.55,
-                        }}
-                    />
-                    <LinearGradient
-                        colors={['transparent', 'rgba(23,23,23,0.8)', 'rgba(23,23,23,1)']}
-                        style={{ width, height: height * 0.40 }}
-                        start={{ x: 0.5, y: 0 }}
-                        end={{ x: 0.5, y: 1 }}
-                        className="absolute bottom-0"
-                    />
-                </View>
+                {
+                    loading ? (
+                        <Loading />
+                    ) : (
+                        <View>
+                            <Image
+                                source={require('../assets/slider/slider-2.webp')}
+                                style={{
+                                    width,
+                                    height: height * 0.55,
+                                }}
+                            />
+                            <LinearGradient
+                                colors={['transparent', 'rgba(23,23,23,0.8)', 'rgba(23,23,23,1)']}
+                                style={{ width, height: height * 0.40 }}
+                                start={{ x: 0.5, y: 0 }}
+                                end={{ x: 0.5, y: 1 }}
+                                className="absolute bottom-0"
+                            />
+                        </View>
+                    )
+                }
+
+
             </View>
 
             {/* Movie Details */}
