@@ -22,7 +22,7 @@ const MovieScreen = () => {
     const navigation = useNavigation()
     const [cast, setCast] = useState([1, 2, 3, 4, 5])
     const [similarMovies, setsimilarMovies] = useState([1, 2, 3, 4, 5])
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     let movieName = 'Spider Man no way home!'
 
 
@@ -54,7 +54,7 @@ const MovieScreen = () => {
                     ) : (
                         <View>
                             <Image
-                                source={require('../assets/slider/slider-2.webp')}
+                                source={require('../assets/slider/slider-1.png')}
                                 style={{
                                     width,
                                     height: height * 0.55,
