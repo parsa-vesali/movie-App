@@ -39,8 +39,8 @@ const MovieList = ({ title, data, hideSeeAll }) => {
 							>
 								<View className="space-y-1 mr-4">
 									<Image
-										source={require('../assets/slider/slider-1.png')}
-										// source={{ uri: image185(item.poster_path) }}
+										// source={require('../assets/slider/slider-1.png')}
+										source={{ uri: image185(item.poster_path) }}
 										className="rounded-3xl"
 										style={{
 											width: width * 0.33,

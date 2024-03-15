@@ -9,6 +9,7 @@ import { LinearGradient } from 'expo-linear-gradient'
 import Cast from '../components/Cast'
 import MovieLoist from '../components/MovieList'
 import Loading from "../components/Loading";
+import { fetchMovieCredits, fetchMovieDetails, fetchMovieSimilar, image500 } from '../api/moviedb'
 
 
 var { width, height } = Dimensions.get('window')
@@ -20,15 +21,35 @@ const MovieScreen = () => {
     const { params: item } = useRoute()
     const [isFavourite, setIsFavourite] = useState(false)
     const navigation = useNavigation()
-    const [cast, setCast] = useState([1, 2, 3, 4, 5])
-    const [similarMovies, setsimilarMovies] = useState([1, 2, 3, 4, 5])
-    const [loading, setLoading] = useState(true)
-    let movieName = 'Spider Man no way home!'
+    const [cast, setCast] = useState([])
+    const [similarMovies, setsimilarMovies] = useState([])
+    const [loading, setLoading] = useState(false)
+    const [movie, setMovie] = useState({})
+
 
 
     useEffect(() => {
         // call the movie api
+        setLoading(true)
+        getMovieDetails(item.id)
+        getMovieCredits(item.id)
+        getSimilarMovies(item.id)
     }, [item])
+
+    const getMovieDetails = async id => {
+        const data = await fetchMovieDetails(id)
+        if (data) setMovie(data)
+        setLoading(false)
+    }
+
+    const getMovieCredits = async id => {
+        const data = await fetchMovieCredits(id)
+        if (data && data.cast) setCast(data.cast)
+    }
+    const getSimilarMovies = async id => {
+        const data = await fetchMovieSimilar(id)
+        if (data && data.results) setsimilarMovies(data.results)
+    }
 
 
 
@@ -54,7 +75,8 @@ const MovieScreen = () => {
                     ) : (
                         <View>
                             <Image
-                                source={require('../assets/slider/slider-1.png')}
+                                // source={require('../assets/slider/slider-1.png')}
+                                source={{ uri: image500(movie.poster_path) }}
                                 style={{
                                     width,
                                     height: height * 0.55,
@@ -79,31 +101,41 @@ const MovieScreen = () => {
 
                 {/* TITLE */}
                 <Text className="text-white text-center text-3xl font-bold tracking-wider">
-                    {movieName}
+                    {
+                        movie?.title
+                    }
                 </Text>
 
                 {/* Status , Relaes , runtime  */}
-                <Text className="text-neutral-400 font-semibold text-base text-center">
-                    Released . 2024 . 70 min
-                </Text>
+                {
+                    movie?.id ? (
+                        <Text className="text-neutral-400 font-semibold text-base text-center">
+                            {movie?.status} . {movie?.release_date?.split('-')[0]} . {movie?.runtime} . 70 min
+                        </Text>
+                    ) : null
+                }
+
 
                 {/* Genres */}
                 <View className="flex-row justify-center mx-4 space-x-2">
-                    <Text className="text-neutral-400 font-semibold text-base text-center">
-                        Action .
-                    </Text>
-                    <Text className="text-neutral-400 font-semibold text-base text-center">
-                        Threll .
-                    </Text>
-                    <Text className="text-neutral-400 font-semibold text-base text-center">
-                        comedy
-                    </Text>
+                    {
+                        movie?.genres?.map((genre, index) => {
+                            let showDot = index + 1 != movie.genres.length
+                            return (
+                                <Text key={index} className="text-neutral-400 font-semibold text-base text-center">
+                                    {genre?.name} {showDot ? "." : null}
+                                </Text>
+                            )
+                        })
+                    }
+
                 </View>
 
                 {/* Description */}
                 <Text className="text-neutral-400 mx-4 tracking-wide">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Est animi consequatur at voluptatibus quidem repellat laudantium hic iusto necessitatibus ab.
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Est animi consequatur at voluptatibus quidem repellat laudantium hic iusto necessitatibus ab.
+                    {
+                        movie?.overview
+                    }
                 </Text>
             </View>
 
