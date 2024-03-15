@@ -2,6 +2,7 @@ import React from 'react'
 import { View, Text, TouchableOpacity, Dimensions, Image } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import Carousel from 'react-native-snap-carousel'
+import { image500 } from '../api/moviedb'
 
 var { width, height } = Dimensions.get('window')
 
@@ -30,10 +31,12 @@ const TrendingMovies = ({ data }) => {
 }
 
 const MovieCard = ({ item, handleClick }) => {
+
     return (
         <TouchableOpacity onPress={() => handleClick(item)}>
             <Image
                 source={require('../assets/slider/slider-2.webp')}
+                // source={{ uri: image500(item.poster_path) }}
                 style={{
                     width: width * 0.6,
                     height: height * 0.4
